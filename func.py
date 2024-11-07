@@ -15,9 +15,9 @@ class Website:
         """Create The Main Folder If It Doesn't Exist"""
         if not os.path.exists(MAIN_FOLDER):
             os.mkdir(MAIN_FOLDER)
-            print(f"Created main folder: {MAIN_FOLDER}")
+            print(f"Created Main Folder: {MAIN_FOLDER}")
         else:
-            print(f"Main folder already exists: {MAIN_FOLDER}")
+            print(f"Main Foler Already Exists: {MAIN_FOLDER}")
         
     def connection(self, site):
         """Checks If The Website Is Reachable."""
@@ -25,7 +25,7 @@ class Website:
             response = requests.get(site)
             return response.status_code == 200
         except requests.RequestException as e:
-            print(f"Connection error: {e}")
+            print(f"Connection Error: {e}")
             return False
                 
     def testConnection(self, site):
@@ -38,4 +38,16 @@ class Website:
             exit()
     
     def sourceCode(self, site):
-        pass
+        """Gets The Source Code of The Given Website"""
+        response = requests.get(site)
+        if response.status_code == 200:
+            soup = BeautifulSoup(response.content, "lxml")
+            self.mainFolder()
+            try:
+                with open(os.path.join(MAIN_FOLDER, "Source_Code.txt"), "w") as file:
+                        file.write(soup.prettify())
+                        print("+ Source Code Written To 'Source_Code.txt' In The Main Folder +")
+            except IOError as e:
+                print(f"Error Writing To File: {e}")
+        else:
+            print("+ Unable To Fetch Source Code. Website Is Not Reachable +")
