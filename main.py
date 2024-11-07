@@ -30,7 +30,8 @@ usrCls.mainFolder()
 
 print("""
     1> Test Connection
-    2> Get Source Code
+    2> Create Main Folder/Check For Main Folder
+    3> Get Source Code
 """)
 
 usrCommand = int(input("> "))
@@ -38,4 +39,6 @@ usrCommand = int(input("> "))
 if usrCommand == 1:
     usrCls.testConnection(usrSite)
 elif usrCommand == 2:
+    usrCls.mainFolder()
+elif usrCommand == 3:
     usrCls.sourceCode(usrSite)
