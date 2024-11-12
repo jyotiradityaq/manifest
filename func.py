@@ -51,3 +51,24 @@ class Website:
                 print(f"Error Writing To File: {e}")
         else:
             print("+ Unable To Fetch Source Code. Website Is Not Reachable +")
+
+    def getLinks(self, site):
+        """Gets All The Links From The Website"""
+        links = []
+        response = requests.get(site)
+        if response.status_code == 200:
+            soup = BeautifulSoup(response.content, "lxml")
+            self.mainFolder()
+            try:
+                for link in soup.find_all('a', href=True):
+                    href = link['href']
+                    links.append(href)
+
+                with open(os.path.join(MAIN_FOLDER, "Links.txt"), "a") as file:
+                    for allLink in links:
+                        file.write(allLink + "\n")
+                    print("+ Links Written To 'Links.txt' In The Main Folder +")
+            except IOError as e:
+                print(f"Error Writing To File: {e}")
+        else:
+            print("+ Unable To Fetch Source Code. Website Is Not Reachable +")
